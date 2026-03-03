@@ -1,20 +1,28 @@
 # config/settings.py
 import os
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
+def get_secret(key, default=None):
+    """Get secret from Streamlit secrets or environment variables"""
+    try:
+        return st.secrets.get(key, os.getenv(key, default))
+    except Exception:
+        return os.getenv(key, default)
+
 # API Keys
-GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+GROQ_API_KEY = get_secret('GROQ_API_KEY')
+OPENAI_API_KEY = get_secret('OPENAI_API_KEY')
 
 # Model Selection (Switch between Groq and OpenAI)
-USE_GROQ = os.getenv('USE_GROQ', 'true').lower() == 'true'
+USE_GROQ = str(get_secret('USE_GROQ', 'true')).lower() == 'true'
 
 # Model Configuration
-GROQ_MODEL = os.getenv('GROQ_MODEL', 'llama-3.3-70b-versatile')
-OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4')
-TEMPERATURE = float(os.getenv('TEMPERATURE', 0.7))
+GROQ_MODEL = get_secret('GROQ_MODEL', 'llama-3.3-70b-versatile')
+OPENAI_MODEL = get_secret('OPENAI_MODEL', 'gpt-4')
+TEMPERATURE = float(get_secret('TEMPERATURE', 0.7))
 
 # Available Groq Models (all FREE!)
 GROQ_MODELS = {
