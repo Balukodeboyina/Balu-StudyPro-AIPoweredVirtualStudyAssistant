@@ -1,0 +1,9 @@
+
+{
+  "name": "Gemini Study Pro",
+  "description": "An advanced AI-powered study assistant that helps you master any subject through interactive chat, voice-based coaching, and automated quiz generation.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
